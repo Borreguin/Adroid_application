@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -37,8 +38,17 @@ public class Nuevo_Cliente extends AppCompatActivity {
 
         // Load Data when app is opened
         new GetData().execute(Common.getAddressAPI());
+
+        // Adding event for button Add
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new PostData(edtCliente.getText().toString()).execute(Common.getAddressAPI());
+            }
+        });
     }
 
+    // Function for processing the data coming from DB
     class GetData extends AsyncTask<String,Void,String>{
         ProgressDialog pd = new ProgressDialog(Nuevo_Cliente.this);
 
@@ -77,11 +87,46 @@ public class Nuevo_Cliente extends AppCompatActivity {
             // Set adapter to ListView
             lstView.setAdapter(adapter);
 
+            pd.dismiss();
+        }
+
+    }
+
+    // Function to add new user
+    class PostData extends AsyncTask<String, String, String>{
+        ProgressDialog pd = new ProgressDialog(Nuevo_Cliente.this);
+        String clientName;
+
+        public PostData(String clientName) {
+            this.clientName = clientName;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pd.setTitle("Por favor espere... ");
+            pd.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String urlString = params[0];
+
+            HTTPDataHandler hh = new HTTPDataHandler();
+            String json = "(\"user\": \"" + clientName + "\")";
+            hh.PostHTTPData(urlString,json);
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            // Refresh Data
+            new GetData().execute(Common.getAddressAPI());
 
 
             pd.dismiss();
         }
-
-
     }
 }

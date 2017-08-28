@@ -1,5 +1,6 @@
 package com.example.roberto.hilda_app;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ButtonBarLayout;
@@ -46,6 +47,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    // Button for navegation
+    public void gotoNewClient(View view){
+        Intent NextPage = new Intent(MainActivity.this, Nuevo_Cliente.class);
+        startActivity(NextPage);
+
+    }
+
 
 
 }

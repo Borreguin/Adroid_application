@@ -27,8 +27,8 @@ public class Nuevo_Cliente extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nuevo__cliente);
-        setContentView(R.layout.new_client);
+        setContentView(R.layout.activity_nuevo_cliente);
+        //setContentView(R.layout.new_client);
         lstView = (ListView)findViewById(R.id.lstView);
         btnAdd = (Button)findViewById(R.id.btnAdd);
         btnEdit = (Button)findViewById(R.id.btnEdit);

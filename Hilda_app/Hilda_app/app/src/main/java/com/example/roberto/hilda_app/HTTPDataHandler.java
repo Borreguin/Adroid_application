@@ -4,15 +4,20 @@ import android.system.Os;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.net.UnknownServiceException;
 import java.nio.charset.StandardCharsets;
+
+import javax.net.ssl.HttpsURLConnection;
 
 
 /**
@@ -49,7 +54,7 @@ public class HTTPDataHandler {
 
             }
             else{
-
+                // TODO: Only if is needed
             }
 
 
@@ -62,25 +67,26 @@ public class HTTPDataHandler {
     }
 
     public void PostHTTPData(String urlString, String json){
-        try {
-            // Define the connection for posting
+        try{
             URL url = new URL(urlString);
             HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
+
             urlConnection.setRequestMethod("POST");
             urlConnection.setDoOutput(true);
 
-            // Define size of package
             byte[] out = json.getBytes(StandardCharsets.UTF_8);
             int length = out.length;
 
             urlConnection.setFixedLengthStreamingMode(length);
-            urlConnection.setRequestProperty("Content=Type", "application/java; charset=UTF-8" );
+            urlConnection.setRequestProperty("Content-Type","application/json; charset=UTF-8");
+
             urlConnection.connect();;
-            try(OutputStream os = urlConnection.getOutputStream()){
+
+            try(OutputStream os = urlConnection.getOutputStream())
+            {
                 os.write(out);
             }
             InputStream response = urlConnection.getInputStream();
-
 
         } catch (MalformedURLException e) {
             e.printStackTrace();

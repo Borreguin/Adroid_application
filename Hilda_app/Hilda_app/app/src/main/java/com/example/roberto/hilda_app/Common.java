@@ -18,7 +18,7 @@ public class Common {
         String baseUrl = String.format("https://api.mlab.com/api/1/databases/%s/collections/%s",
                 DB_NAME,COLLECTION_NAME);
         StringBuilder stringBuilder =  new StringBuilder(baseUrl);
-        stringBuilder.append("/"+cliente.get_id().getOid()+"?apiKey"+API_KEY);
+        stringBuilder.append("/"+cliente.get_id().getOid()+"?apiKey="+API_KEY);
         return stringBuilder.toString();
     }
 

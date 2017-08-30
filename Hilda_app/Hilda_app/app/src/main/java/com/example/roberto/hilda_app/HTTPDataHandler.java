@@ -79,9 +79,7 @@ public class HTTPDataHandler {
 
             urlConnection.setFixedLengthStreamingMode(length);
             urlConnection.setRequestProperty("Content-Type","application/json; charset=UTF-8");
-
             urlConnection.connect();;
-
             try(OutputStream os = urlConnection.getOutputStream())
             {
                 os.write(out);
